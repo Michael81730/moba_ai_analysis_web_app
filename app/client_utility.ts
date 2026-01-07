@@ -1,4 +1,6 @@
-export function getCookie(cname) {
+'use-client'
+
+export function getCookie(cname: string) {
   let name = cname + "=";
   let decodedCookie = decodeURIComponent(document.cookie);
   let ca = decodedCookie.split(';');
@@ -16,10 +18,10 @@ export function getCookie(cname) {
   return "";
 }
 
-export function validateUsername(username) {
+export function validateUsername(username: string) {
     return true;
 }
 
-export function validatePassword(password) {
+export function validatePassword(password: string) {
     return true;
 }

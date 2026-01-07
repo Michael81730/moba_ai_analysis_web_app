@@ -2,18 +2,16 @@
 
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 import Alert from 'react-bootstrap/Alert';
 import { useState } from "react";
-import { signup } from '@/app/actions'
+import { signup } from '@/app/server_actions'
 
 function SignupForm() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string|null>(null);
 
   const handleClickSignupBtn = async (e: any) => {
     e.preventDefault();
@@ -35,8 +33,7 @@ function SignupForm() {
 
     const response = await signup(username, email, password);
     console.log("Signup response:", response);
-    setError(response.error);
-    // window.location.href = '/login'; 
+    setError(response?.error);
   };
 
   return (

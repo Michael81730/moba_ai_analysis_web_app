@@ -1,15 +1,11 @@
 import Container from 'react-bootstrap/Container';
-import { cookies } from 'next/headers'
-import { redirect } from 'next/navigation'
+import { checkAuth } from '@/app/server_actions'
+import MatchAnalsysAccordion from "@/components/match_analysis_accordion"
 
 export default async function Page() {
-  const cookieStore = await cookies();
-  if(!cookieStore.has("access")) {
-      redirect('/login');
-  }
-  return <>
-      <Container className="mt-5" style={{width:"28em"}}>
-        <h1>Match Analysis</h1>
-      </Container>
-  </>;
+  await checkAuth();
+
+  return <Container className="mt-4">
+    <MatchAnalsysAccordion></MatchAnalsysAccordion>
+  </Container>;
 }

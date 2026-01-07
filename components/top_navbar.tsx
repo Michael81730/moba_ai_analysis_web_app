@@ -3,21 +3,20 @@
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Image from 'react-bootstrap/Image';
 import { useState, useEffect } from "react";
-import { getCookie } from '@/app/utility';
-import { logout } from '@/app/actions'
+import { getCookie } from '@/app/client_utility';
+import { logout } from '@/app/server_actions'
 
-function TopNavbar() {
-  const [authenticated, setAuthenticated] = useState(false);
+function TopNavbar({authenticated}: any) {
   const [username, setUsername] = useState("");
+  const [urlPath,  setUrlPath] = useState("");
 
   useEffect(()=>{
-    setAuthenticated(getCookie("access")!="");
     setUsername(getCookie("user"));
+    setUrlPath(window.location.pathname);
   });
 
   const handleClickLogoutBtn = async (e: any) => {
@@ -40,8 +39,8 @@ function TopNavbar() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="/match-analysis">Match Analysis</Nav.Link>
-            <Nav.Link href="/analysis-history">Analysis History</Nav.Link>
+            <Nav.Link href="/match-analysis" active={urlPath=="/match-analysis"}>Match Analysis</Nav.Link>
+            <Nav.Link href="/analysis-history" active={urlPath=="/analysis-history"}>Analysis History</Nav.Link>
           </Nav>
           <Nav className="ms-auto">
             <Dropdown>

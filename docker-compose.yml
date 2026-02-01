@@ -1,0 +1,16 @@
+services:
+  next:
+    image: michael81730/moba-ai-analysis-web-app-next:latest
+    container_name: next
+    restart: always
+    expose:
+      - "3000"
+
+  web-app-nginx:
+    image: michael81730/moba-ai-analysis-web-app-nginx:latest
+    container_name: web-app-nginx
+    restart: always
+    depends_on:
+      - "next"
+    ports:
+      - "30:30"

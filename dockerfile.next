@@ -1,0 +1,30 @@
+FROM node:24-alpine AS base
+
+# build stage
+FROM base AS build
+
+WORKDIR /app
+
+COPY ./package*.json ./
+
+RUN npm install
+
+COPY . . 
+
+RUN npm run build
+
+# prod runner stage
+FROM base AS runner
+
+WORKDIR /app
+
+COPY --from=build /app/public ./public
+
+RUN mkdir .next
+
+COPY --from=build /app/.next/standalone ./
+COPY --from=build /app/.next/static ./.next/static
+
+EXPOSE 3000
+
+CMD ["node", "server.js"]
